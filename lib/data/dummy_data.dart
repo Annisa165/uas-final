@@ -1,10 +1,5 @@
 import 'package:uts/models/game_model.dart';
 
-// PATH GAMBAR SUDAH DISESUAIKAN DENGAN NAMA GAME DAN SCREENSHOT ANDA
-// Pastikan semua file gambar ini ada di folder assets/images/
-
-// DESKRIPSI SUDAH DIUBAH KE BAHASA INDONESIA
-
 final List<Game> dummyGames = [
   Game(
     id: 'g1',
@@ -12,7 +7,6 @@ final List<Game> dummyGames = [
     genre: 'Open-world ARPG',
     developer: 'miHoYo',
     releaseDate: '28 September 2020',
-    // --- DESKRIPSI BAHASA INDONESIA ---
     description:
         "Jika Anda mencari game untuk memuaskan keinginan ARPG dunia terbuka, yang mungkin sedikit bernuansa Breath of the Wild, maka Anda beruntung. Genshin Impact adalah ARPG gaya anime gratis untuk dimainkan yang berlatar di dunia Teyvat.",
     bannerUrl: 'assets/images/genshin_banner.webp',
@@ -30,7 +24,7 @@ final List<Game> dummyGames = [
       graphics: 'NVIDIA GeForce GTX 1060 6GB or better',
       storage: '30 GB',
     ),
-    isPopular: true, // Tandai sebagai Populer
+    isPopular: true,
   ),
   Game(
     id: 'g2',
@@ -38,15 +32,12 @@ final List<Game> dummyGames = [
     genre: 'Shooter',
     developer: 'Blizzard Entertainment',
     releaseDate: '04 Oktober 2022',
-    // --- DESKRIPSI BAHASA INDONESIA ---
     description:
         'Overwatch 2 adalah penembak orang pertama multipemain berbasis tim yang dikembangkan dan diterbitkan oleh Blizzard Entertainment. Sebagai sekuel dari penembak pahlawan Overwatch 2016, game ini dimaksudkan untuk memiliki lingkungan bersama untuk mode pemain-lawan-pemain (PvP) sambil memperkenalkan mode kooperatif yang persisten.',
-    bannerUrl: 'assets/images/overwatch_icon.png', // Gunakan icon sementara
+    bannerUrl: 'assets/images/overwatch_icon.png',
     iconUrl: 'assets/images/overwatch_icon.png',
     categories: ['Menembak', 'Strategi'],
-    screenshots: [
-      'assets/images/overwatch_icon.png', // Placeholder
-    ],
+    screenshots: ['assets/images/overwatch_icon.png'],
     requirements: SystemRequirements(
       os: 'Windows 10 64-bit',
       processor: 'Intel Core i5 or AMD equivalent',
@@ -54,7 +45,7 @@ final List<Game> dummyGames = [
       graphics: 'NVIDIA GeForce GTX 1050 Ti',
       storage: '50 GB',
     ),
-    isNew: true, // Tandai sebagai Terbaru
+    isNew: true,
   ),
   Game(
     id: 'g3',
@@ -62,10 +53,9 @@ final List<Game> dummyGames = [
     genre: 'MMOARPG',
     developer: 'Blizzard & NetEase',
     releaseDate: '02 Juni 2022',
-    // --- DESKRIPSI BAHASA INDONESIA ---
     description:
         'Diablo Immortal adalah permainan peran aksi daring multipemain masif gratis untuk dimainkan yang dikembangkan oleh Blizzard Entertainment dan NetEase.',
-    bannerUrl: 'assets/images/diablo_icon.png', // Gunakan icon sementara
+    bannerUrl: 'assets/images/diablo_icon.png',
     iconUrl: 'assets/images/diablo_icon.png',
     categories: ['ARPG', 'MMO'],
     screenshots: [],
@@ -76,7 +66,7 @@ final List<Game> dummyGames = [
       graphics: 'Adreno 512 / PowerVR GT7600',
       storage: '10 GB',
     ),
-    isNew: true, // Tandai sebagai Terbaru
+    isNew: true,
   ),
   Game(
     id: 'g4',
@@ -84,10 +74,9 @@ final List<Game> dummyGames = [
     genre: 'Shooter',
     developer: 'Krafton',
     releaseDate: '12 Januari 2022',
-    // --- DESKRIPSI BAHASA INDONESIA ---
     description:
         'PUBG: Battlegrounds adalah game battle royale yang dikembangkan dan diterbitkan oleh PUBG Corporation, anak perusahaan dari perusahaan video game Korea Selatan Bluehole.',
-    bannerUrl: 'assets/images/pubg_icon.webp', // Gunakan icon sementara
+    bannerUrl: 'assets/images/pubg_icon.webp',
     iconUrl: 'assets/images/pubg_icon.webp',
     categories: ['Menembak', 'Battle Royale'],
     screenshots: [],
@@ -98,7 +87,7 @@ final List<Game> dummyGames = [
       graphics: 'NVIDIA GeForce GTX 960 2GB',
       storage: '40 GB',
     ),
-    isPopular: true, // Tandai sebagai Populer
+    isPopular: true,
   ),
   Game(
     id: 'g5',
@@ -106,10 +95,9 @@ final List<Game> dummyGames = [
     genre: 'ARPG',
     developer: 'Smilegate RPG',
     releaseDate: '11 Februari 2022',
-    // --- DESKRIPSI BAHASA INDONESIA ---
     description:
         'Lost Ark adalah permainan peran aksi daring multipemain masif gratis untuk dimainkan yang dikembangkan bersama oleh Tripod Studio dan Smilegate RPG.',
-    bannerUrl: 'assets/images/lostark_icon.jpg', // Gunakan icon sementara
+    bannerUrl: 'assets/images/lostark_icon.jpg',
     iconUrl: 'assets/images/lostark_icon.jpg',
     categories: ['ARPG', 'MMO'],
     screenshots: [],
@@ -127,10 +115,9 @@ final List<Game> dummyGames = [
     genre: 'Shooter',
     developer: 'Darkflow Software',
     releaseDate: '08 April 2021',
-    // --- DESKRIPSI BAHASA INDONESIA ---
     description:
         'Enlisted adalah game penembak orang pertama taktis multipemain berbasis regu yang dikembangkan oleh Darkflow Software dan diterbitkan oleh Gaijin Entertainment.',
-    bannerUrl: 'assets/images/enlisted_icon.jpg', // Gunakan icon sementara
+    bannerUrl: 'assets/images/enlisted_icon.jpg',
     iconUrl: 'assets/images/enlisted_icon.jpg',
     categories: ['Menembak', 'Strategi'],
     screenshots: [],
@@ -148,10 +135,9 @@ final List<Game> dummyGames = [
     genre: 'Strategy',
     developer: 'InnoGames',
     releaseDate: '17 April 2012',
-    // --- DESKRIPSI BAHASA INDONESIA ---
     description:
         'Forge of Empires adalah game strategi berbasis browser yang dikembangkan oleh InnoGames. Game ini memungkinkan pemain memimpin sebuah kota dari Zaman Batu dan mengembangkannya melalui berbagai zaman dalam sejarah manusia.',
-    bannerUrl: 'assets/images/forge_icon.png', // Gunakan icon sementara
+    bannerUrl: 'assets/images/forge_icon.png',
     iconUrl: 'assets/images/forge_icon.png',
     categories: ['Strategi'],
     screenshots: [],
@@ -165,15 +151,14 @@ final List<Game> dummyGames = [
   ),
   Game(
     id: 'g8',
-    title: 'Naruto Storm 4', // Nama game sebenarnya (opsional)
+    title: 'Naruto Storm 4',
     genre: 'Fighting',
     developer: 'CyberConnect2',
     releaseDate: '4 Februari 2016',
-    // --- DESKRIPSI BAHASA INDONESIA ---
     description:
         'Naruto Shippuden: Ultimate Ninja Storm 4 adalah game pertarungan yang memungkinkan pemain bertarung dalam arena 3D.',
-    bannerUrl: 'assets/images/naruto_banner.webp', // Banner Naruto
-    iconUrl: 'assets/images/naruto_banner.webp', // Icon placeholder
+    bannerUrl: 'assets/images/naruto_banner.webp',
+    iconUrl: 'assets/images/naruto_banner.webp',
     categories: ['Fighting', 'Action'],
     screenshots: [],
     requirements: SystemRequirements(
@@ -184,6 +169,6 @@ final List<Game> dummyGames = [
       graphics: '1024 MB video card',
       storage: '40 GB available space',
     ),
-    isPopular: true, // Tandai sebagai Populer
+    isPopular: true,
   ),
 ];

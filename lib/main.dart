@@ -23,24 +23,19 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    // Warna utama yang akan digunakan
     const primaryColor = Colors.blueGrey;
-    const accentColor = Color(0xFFFFA000); // Oranye amber sebagai aksen
+    const accentColor = Color(0xFFFFA000);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Game Store UI',
       theme: ThemeData(
-        brightness: Brightness.light, // Tema terang
+        brightness: Brightness.light,
         primarySwatch: primaryColor,
-        // Warna dasar scaffold
-        scaffoldBackgroundColor:
-            Colors.grey[100], // Sedikit lebih gelap dari putih
-        // Font dasar
+        scaffoldBackgroundColor: Colors.grey[100],
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
         ).apply(bodyColor: Colors.black87, displayColor: Colors.black87),
-        // Tema AppBar
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey[50],
           foregroundColor: Colors.black87,
@@ -52,16 +47,14 @@ class MyApp extends StatelessWidget {
           ),
           iconTheme: const IconThemeData(color: Colors.black54),
         ),
-        // Tema Card
         cardTheme: CardThemeData(
           color: Colors.white,
-          elevation: 1.5, // Sedikit lebih tebal shadow-nya
+          elevation: 1.5,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15), // Lebih melengkung
+            borderRadius: BorderRadius.circular(15),
           ),
           margin: const EdgeInsets.only(bottom: 16),
         ),
-        // Tema Chip (Kategori)
         chipTheme: ChipThemeData(
           backgroundColor: Colors.white,
           selectedColor: primaryColor[100],
@@ -77,23 +70,19 @@ class MyApp extends StatelessWidget {
           ),
           elevation: 0.5,
           pressElevation: 1.0,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 8,
-          ), // Padding lebih
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         ),
-        // Tema TextField (Search Bar)
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: Colors.white,
           hintStyle: TextStyle(color: Colors.grey[500]),
-          prefixIconColor: primaryColor[600], // Warna ikon search
+          prefixIconColor: primaryColor[600],
           contentPadding: const EdgeInsets.symmetric(
             vertical: 16,
             horizontal: 20,
-          ), // Padding lebih
+          ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25), // Lebih bulat
+            borderRadius: BorderRadius.circular(25),
             borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
@@ -102,16 +91,12 @@ class MyApp extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25),
-            borderSide: BorderSide(
-              color: primaryColor.shade300,
-              width: 2,
-            ), // Border lebih jelas saat fokus
+            borderSide: BorderSide(color: primaryColor.shade300, width: 2),
           ),
         ),
-        // Tema ListTile (untuk daftar game)
         listTileTheme: ListTileThemeData(
           iconColor: primaryColor[600],
-          tileColor: Colors.white, // Default putih (nanti di override di Card)
+          tileColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -120,7 +105,6 @@ class MyApp extends StatelessWidget {
             horizontal: 16,
           ),
         ),
-        // Warna aksen
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: primaryColor,
         ).copyWith(secondary: accentColor),
