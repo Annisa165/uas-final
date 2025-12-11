@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:uts/models/game_model.dart';
-import 'package:uts/screens/detail_screen.dart';
+import '../models/game.dart';
+import '../screens/detail_screen.dart';
 
 class GameCard extends StatelessWidget {
   final Game game;
-
-  const GameCard({super.key, required this.game});
+  final double width;
+  const GameCard({super.key, required this.game, this.width = 140});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.pushNamed(
           context,
@@ -17,57 +17,42 @@ class GameCard extends StatelessWidget {
           arguments: game.id,
         );
       },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Stack(
+      child: SizedBox(
+        width: width,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              game.bannerUrl,
-              height: 200,
-              width: 300,
-              fit: BoxFit.cover,
-            ),
-            Positioned.fill(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 80,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        Colors.black.withOpacity(0.8),
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: SizedBox(
+                height: 110,
+                width: width,
+                child: game.thumbnail.isNotEmpty
+                    ? Image.network(
+                        game.thumbnail,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Container(
+                          color: Colors.grey[200],
+                          child: const Icon(Icons.broken_image, size: 40),
+                        ),
+                      )
+                    : Container(
+                        color: Colors.grey[200],
+                        child: const Icon(Icons.videogame_asset, size: 40),
+                      ),
               ),
             ),
-            Positioned(
-              bottom: 12,
-              left: 12,
-              right: 12,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    game.title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    game.genre,
-                    style: const TextStyle(color: Colors.white70, fontSize: 14),
-                  ),
-                ],
-              ),
+            const SizedBox(height: 8),
+            Text(
+              game.title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              game.genre,
+              style: const TextStyle(color: Colors.grey, fontSize: 12),
             ),
           ],
         ),

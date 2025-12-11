@@ -1,103 +1,153 @@
 import 'package:flutter/material.dart';
-import 'package:uts/data/dummy_data.dart';
-import 'package:uts/screens/game_list_screen.dart';
-import 'package:uts/widgets/game_card.dart';
+import 'package:provider/provider.dart';
+import '../providers/game_provider.dart';
+import '../widgets/game_card.dart';
+import 'game_list_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final _searchCtrl = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GameProvider>(context, listen: false).fetchFromApi();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final popularGames = dummyGames.where((game) => game.isPopular).toList();
-    final newGames = dummyGames.where((game) => game.isNew).toList();
-    final categories = ['Menembak', 'Balap', 'Strategi', 'Sport', 'ARPG'];
+    final provider = Provider.of<GameProvider>(context);
+    final state = provider.state;
+
+    final games = provider.allGames;
+
+    final genres = <String>{};
+    for (var g in games) {
+      if (g.genre.isNotEmpty) genres.add(g.genre);
+    }
+    final categories = genres.toList();
+
+    final popular = games.take(6).toList();
+    final newGames = games.skip(6).take(6).toList();
 
     return Scaffold(
+      appBar: AppBar(title: const Text('Game Catalog')),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () => Navigator.pushNamed(context, '/game-form'),
+      ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(),
-                const SizedBox(height: 24),
-                _buildSearchBar(),
-                const SizedBox(height: 24),
-                _buildCategoryChips(context, categories),
-                const SizedBox(height: 24),
-                _buildGameSection('Game Populer', popularGames),
-                const SizedBox(height: 24),
-                _buildGameSection('Game Terbaru', newGames),
-              ],
+        child: RefreshIndicator(
+          onRefresh: () => provider.fetchFromApi(),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Selamat Datang',
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  const Text('Info game apa yang kamu butuhkan?'),
+
+                  const SizedBox(height: 20),
+
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _searchCtrl,
+                          decoration: InputDecoration(
+                            hintText: 'Cari game...',
+                            prefixIcon: const Icon(Icons.search),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onChanged: (q) => provider.setSearchQuery(q),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: () =>
+                            provider.setSearchQuery(_searchCtrl.text),
+                        child: const Text('Cari'),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  SizedBox(
+                    height: 40,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categories.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (_, i) {
+                        final c = categories[i];
+                        return ActionChip(
+                          label: Text(c),
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            GameListScreen.routeName,
+                            arguments: c,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  if (state == DataState.loading)
+                    const Center(child: CircularProgressIndicator())
+                  else if (state == DataState.error)
+                    Center(child: Text(provider.errorMessage))
+                  else ...[
+                    _SectionHorizontal(
+                      title: 'Game Populer',
+                      children: popular
+                          .map((g) => GameCard(game: g, width: 140))
+                          .toList(),
+                    ),
+                    const SizedBox(height: 24),
+                    _SectionHorizontal(
+                      title: 'Game Terbaru',
+                      children: newGames
+                          .map((g) => GameCard(game: g, width: 140))
+                          .toList(),
+                    ),
+                  ],
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildHeader() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Text(
-          'Selamat Datang',
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 4),
-        Text(
-          'Info game apa yang kamu butuhkan?',
-          style: TextStyle(fontSize: 16, color: Colors.grey),
-        ),
-      ],
-    );
-  }
+class _SectionHorizontal extends StatelessWidget {
+  final String title;
+  final List<Widget> children;
 
-  Widget _buildSearchBar() {
-    return TextField(
-      decoration: InputDecoration(
-        hintText: 'Cari game...',
-        prefixIcon: const Icon(Icons.search, color: Colors.grey),
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 16),
-      ),
-    );
-  }
+  const _SectionHorizontal({required this.title, required this.children});
 
-  Widget _buildCategoryChips(BuildContext context, List<String> categories) {
-    return SizedBox(
-      height: 40,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
-        separatorBuilder: (context, index) => const SizedBox(width: 12),
-        itemBuilder: (context, index) {
-          return ActionChip(
-            label: Text(categories[index]),
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                GameListScreen.routeName,
-                arguments: categories[index],
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildGameSection(String title, List games) {
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -105,16 +155,14 @@ class HomeScreen extends StatelessWidget {
           title,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
         SizedBox(
-          height: 200,
+          height: 180,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: games.length,
-            separatorBuilder: (context, index) => const SizedBox(width: 16),
-            itemBuilder: (context, index) {
-              return GameCard(game: games[index]);
-            },
+            itemCount: children.length,
+            itemBuilder: (_, i) => children[i],
+            separatorBuilder: (_, __) => const SizedBox(width: 16),
           ),
         ),
       ],
